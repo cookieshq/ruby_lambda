@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'ruby_lambda'
+
+class RubyLambdaCLI < Thor
+  map '-v' => :version, '--version' => :version
+  desc '-v (--versions)', 'Outputs the version of Ruby Lambda.'
+  def version
+    puts RubyLambda::VERSION
+  end
+end
+
+RubyLambdaCLI.start(ARGV)
