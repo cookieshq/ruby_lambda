@@ -1,7 +1,7 @@
 module RubyLambda
   class Init
 
-    MAIN_RB_TEMPLATE = File.expand_path('../templates/main.rb', __FILE__)
+    TEMPLATE_DIR = "#{__dir__}/templates"
 
     def initialize(current_directory)
       @current_directory  = current_directory
@@ -14,18 +14,20 @@ module RubyLambda
         exit 1
       end
 
-      create_main_rb
-    end
+      Dir.foreach(TEMPLATE_DIR) do |template_file_name|
+        next if template_file_name == '.' or template_file_name == '..'
 
-    def create_main_rb
-      main_rb = File.join(@current_directory, 'main.rb')
+        init_file = File.join(@current_directory, template_file_name)
 
-      if File.exist?(main_rb)
-        @shell.say "Skipped: `main.rb` file already exists at #{File.expand_path(main_rb)}", :yellow
-      else
-        FileUtils.cp(MAIN_RB_TEMPLATE, main_rb)
+        template_file_path = File.join(TEMPLATE_DIR, template_file_name)
 
-        @shell.say 'Created: main.rb', :green
+        if File.exist?(init_file)
+          @shell.say "Skipped: #{template_file_name} file already exists at #{File.expand_path(init_file)}", :yellow
+        else
+          FileUtils.cp(template_file_path, init_file)
+
+          @shell.say "Created: #{template_file_name}", :green
+        end
       end
     end
   end
