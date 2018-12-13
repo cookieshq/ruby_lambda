@@ -9,6 +9,11 @@ class RubyLambdaCLI < Thor
   def version
     puts RubyLambda::VERSION
   end
+
+  desc 'init', 'Uses the current directory as a lambda ruby project (creates `main.rb`, `.ruby-version`, and `Gemfile`).'
+  def init
+    RubyLambda::Init.new(FileUtils.pwd).run
+  end
 end
 
 RubyLambdaCLI.start(ARGV)

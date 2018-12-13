@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "ruby_lambda"
   spec.version       = RubyLambda::VERSION
   spec.authors       = ["denissellu"]
-  spec.email         = ["hingasellu@gmail.com"]
+  spec.email         = ["denis@cookieshq.co.uk"]
 
   spec.summary       = %q{RubyLambda is a toolset for developing and deploying serverless Ruby app in AWS Lambda.}
   spec.description   = %q{Command line tool to locally run and deploy your Ruby app to AWS Lambda.}
