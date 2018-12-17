@@ -14,6 +14,11 @@ class RubyLambdaCLI < Thor
   def init
     RubyLambda::Init.new(FileUtils.pwd).run
   end
+
+  desc 'test', 'Test'
+  def test
+    RubyLambda::Test.new(FileUtils.pwd).run
+  end
 end
 
 RubyLambdaCLI.start(ARGV)
