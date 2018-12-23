@@ -2,14 +2,34 @@
 
 RubyLambda is a toolset for developing and deploying serverless Ruby apps in AWS Lambda.
 
-
 ## Installation
 
     $ gem install ruby_lambda
 
-## Usage
 
-TODO: Write usage instructions here
+## Usage
+The main available commands.
+
+```
+$ ruby-lambda init
+$ ruby-lambda execute
+$ ruby-lambda build
+$ ruby-lambda deploy
+```
+
+### Commands
+
+#### init
+```
+$ ruby-lambda init
+```
+
+Initializes the `event.json`, `main.rb`, `Gemfile`, `.ruby-version` files. `event.json` is where you mock your event.
+
+#### execute
+```
+$ ruby-lambda execute
+```
 
 ## Development
 
@@ -19,7 +39,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/cookieshq/ruby_lambda. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/cookieshq/ruby_lambda. This project is intended to be a welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
