@@ -31,16 +31,16 @@ Gem::Specification.new do |spec|
   spec.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
-  spec.bindir        = "bin"
+  spec.bindir        = 'bin'
   spec.executables   = %w[ruby-lambda]
-  spec.require_paths = ["lib"]
+  spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'thor', '~> 0.19'
   spec.add_runtime_dependency 'awesome_print', '~> 1.8.0'
 
-  spec.add_development_dependency "bundler", "~> 1.16"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency 'bundler', '~> 1.16'
+  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
