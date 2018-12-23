@@ -1,7 +1,7 @@
 require 'ruby_lambda/lambda_context'
 
 module RubyLambda
-  class Test
+  class Execute
     def initialize(current_directory)
       @current_directory  = current_directory
       @shell = Thor::Base.shell.new

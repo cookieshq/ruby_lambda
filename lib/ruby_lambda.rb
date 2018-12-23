@@ -5,7 +5,7 @@ require 'awesome_print'
 
 require 'ruby_lambda/version'
 require 'ruby_lambda/init'
-require 'ruby_lambda/test'
+require 'ruby_lambda/execute'
 
 module RubyLambda
 end

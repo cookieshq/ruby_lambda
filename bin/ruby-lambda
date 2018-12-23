@@ -15,9 +15,9 @@ class RubyLambdaCLI < Thor
     RubyLambda::Init.new(FileUtils.pwd).run
   end
 
-  desc 'test', 'Test'
-  def test
-    RubyLambda::Test.new(FileUtils.pwd).run
+  desc 'execute', 'execute'
+  def execute
+    RubyLambda::Execute.new(FileUtils.pwd).run
   end
 end
 
