@@ -11,7 +11,7 @@ module RubyLambda
     def run
       unless File.writable?(@current_directory)
         @shell.say "Can not create files as the current directory is not writable: #{@current_directory}", :red
-        exit 1
+        return
       end
 
       Dir.foreach(TEMPLATE_DIR) do |template_file_name|
