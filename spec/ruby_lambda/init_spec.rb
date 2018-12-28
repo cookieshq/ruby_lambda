@@ -4,7 +4,7 @@ RSpec.describe RubyLambda::Init do
   let(:example_folder_path) { "#{FileUtils.pwd}/tmp/example" }
   let(:template_folder_path) { "#{FileUtils.pwd}/lib/ruby_lambda/templates" }
 
-  describe '.run' do
+  describe '#run' do
     context 'with writable directory' do
       before :example do
         FileUtils.mkdir_p example_folder_path
