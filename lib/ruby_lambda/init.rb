@@ -29,6 +29,8 @@ module RubyLambda
           @shell.say "Created: #{template_file_name}", :green
         end
       end
+
+      File.rename("#{@current_directory}/env", "#{@current_directory}/.env")
     end
   end
 end

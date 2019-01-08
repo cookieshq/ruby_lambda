@@ -1,0 +1,4 @@
+/tmp/
+.env
+build/
+/.bundle/

@@ -19,9 +19,16 @@ RSpec.describe RubyLambda::Init do
 
         Dir.foreach(template_folder_path) do |template_file_name|
           next if template_file_name == '.' or template_file_name == '..'
+          next if template_file_name == 'env' # Skips testing the env file as it is renamed
 
           expect(File).to exist("#{example_folder_path}/#{template_file_name}")
         end
+      end
+
+      it 'renames env to .env after create' do
+        subject.run
+
+        expect(File).to exist("#{example_folder_path}/.env")
       end
 
       it 'skips files from template folder' do
@@ -29,19 +36,21 @@ RSpec.describe RubyLambda::Init do
           FileUtils.touch 'Gemfile'
         end
 
+        # TODO: Improve this
         expect($stdout).to receive(:print).with(/Created: .ruby-version/)
-        expect($stdout).to receive(:print).with(/Created: main.rb/)
+        expect($stdout).to receive(:print).with(/Created: .gitignore/)
+        expect($stdout).to receive(:print).with(/Created: env/)
+        expect($stdout).to receive(:print).with(/Created: lambda_function.rb/)
         expect($stdout).to receive(:print).with(/Created: event.json/)
+        expect($stdout).to receive(:print).with(/Created: config.yml/)
         expect($stdout).to receive(:print).with(/Skipped: Gemfile/)
 
         subject.run
       end
     end
 
-
     context 'with readonly folder' do
-
-      it do
+      it 'fails to create files' do
         FileUtils.mkdir_p example_folder_path
 
         system("chmod -w #{example_folder_path}")
