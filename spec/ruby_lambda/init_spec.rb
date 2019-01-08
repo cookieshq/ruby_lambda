@@ -15,7 +15,7 @@ RSpec.describe RubyLambda::Init do
       end
 
       it 'creates files from template folder' do
-        subject.run
+        subject.run(mute: true)
 
         Dir.foreach(template_folder_path) do |template_file_name|
           next if template_file_name == '.' or template_file_name == '..'
@@ -26,13 +26,13 @@ RSpec.describe RubyLambda::Init do
       end
 
       it 'renames env to .env after create' do
-        subject.run
+        subject.run(mute: true)
 
         expect(File).to exist("#{example_folder_path}/.env")
       end
 
       it 'renames the function name within the config' do
-        subject.run
+        subject.run(mute: true)
 
         config_data = YAML.load_file "#{example_folder_path}/config.yml"
 
@@ -44,14 +44,15 @@ RSpec.describe RubyLambda::Init do
           FileUtils.touch 'Gemfile'
         end
 
-        # TODO: Improve this
-        expect($stdout).to receive(:print).with(/Created: .ruby-version/)
-        expect($stdout).to receive(:print).with(/Created: .gitignore/)
-        expect($stdout).to receive(:print).with(/Created: env/)
-        expect($stdout).to receive(:print).with(/Created: lambda_function.rb/)
-        expect($stdout).to receive(:print).with(/Created: event.json/)
-        expect($stdout).to receive(:print).with(/Created: config.yml/)
-        expect($stdout).to receive(:print).with(/Skipped: Gemfile/)
+        # TODO: Refactor this maybe?
+        Dir.foreach(template_folder_path) do |template_file_name|
+          next if template_file_name == '.' or template_file_name == '..'
+          next if template_file_name == 'Gemfile' # Skips testing the env file as it is renamed
+
+          expect($stdout).to receive(:print).with("\e[1m\e[32m    Created:\e[0m  #{template_file_name}\n")
+        end
+
+        expect($stdout).to receive(:print).with(/Gemfile file already exists at/)
 
         subject.run
       end

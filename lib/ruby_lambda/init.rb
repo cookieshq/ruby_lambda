@@ -8,7 +8,10 @@ module RubyLambda
       @shell = Thor::Base.shell.new
     end
 
-    def run
+    def run(mute: false)
+
+      @mute = mute
+
       unless File.writable?(@current_directory)
         @shell.say "Can not create files as the current directory is not writable: #{@current_directory}", :red
         return
@@ -30,11 +33,11 @@ module RubyLambda
         template_file_path = File.join(TEMPLATE_DIR, template_file_name)
 
         if File.exist?(init_file)
-          @shell.say "Skipped: #{template_file_name} file already exists at #{File.expand_path(init_file)}", :yellow
+          @shell.say_status("Skipped:", "#{template_file_name} file already exists at #{File.expand_path(init_file)}", :yellow) unless @mute
         else
           FileUtils.cp(template_file_path, init_file)
 
-          @shell.say "Created: #{template_file_name}", :green
+          @shell.say_status("Created:", "#{template_file_name}", :green) unless @mute
         end
       end
     end
@@ -51,6 +54,5 @@ module RubyLambda
 
       File.open(config_file, 'w') { |f| YAML.dump(config_data, f) }
     end
-
   end
 end
