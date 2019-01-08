@@ -31,6 +31,14 @@ RSpec.describe RubyLambda::Init do
         expect(File).to exist("#{example_folder_path}/.env")
       end
 
+      it 'renames the function name within the config' do
+        subject.run
+
+        config_data = YAML.load_file "#{example_folder_path}/config.yml"
+
+        expect(config_data['function_name']).to eq example_folder_path.split('/').last
+      end
+
       it 'skips files from template folder' do
         Dir.chdir example_folder_path do
           FileUtils.touch 'Gemfile'
