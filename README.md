@@ -7,9 +7,35 @@ RubyLambda is a toolset for developing and deploying serverless Ruby apps in AWS
 
     $ gem install ruby_lambda
 
-## Usage
 
-TODO: Write usage instructions here
+## Usage
+The main available commands.
+
+```
+$ ruby-lambda init
+$ ruby-lambda execute
+$ ruby-lambda build
+$ ruby-lambda deploy
+```
+
+### Commands
+
+#### ruby-lambda  init
+```
+$ ruby-lambda init
+```
+
+Initializes the `.gitignore`, `config.yml`, `env`, `event.json`, `lambda_function.rb`, `Gemfile`, `.ruby-version` files.
+* `event.json` is where you mock your event.
+* `config.yml` contains some default configuration for your function.
+* `env` will be renamed to `.env` after the init command runs, it will contain `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`. You will need these to be able to deploy your function.
+
+Please have a read of the `config.yml` and update any of the default configuration to better suit your function.
+
+#### ruby-lambda  execute
+```
+$ ruby-lambda execute
+```
 
 ## Development
 
@@ -19,7 +45,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/cookieshq/ruby_lambda. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/cookieshq/ruby_lambda. This project is intended to be a welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -27,4 +53,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the RubyLambda project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/ruby_lambda/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the RubyLambda project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/cookieshq/ruby_lambda/blob/master/CODE_OF_CONDUCT.md).

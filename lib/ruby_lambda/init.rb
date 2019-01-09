@@ -8,12 +8,23 @@ module RubyLambda
       @shell = Thor::Base.shell.new
     end
 
-    def run
+    def run(mute: false)
+
+      @mute = mute
+
       unless File.writable?(@current_directory)
         @shell.say "Can not create files as the current directory is not writable: #{@current_directory}", :red
-        exit 1
+        return
       end
 
+      move_template_files
+      rename_env_file
+      update_function_name
+    end
+
+    private
+
+    def move_template_files
       Dir.foreach(TEMPLATE_DIR) do |template_file_name|
         next if template_file_name == '.' or template_file_name == '..'
 
@@ -22,13 +33,26 @@ module RubyLambda
         template_file_path = File.join(TEMPLATE_DIR, template_file_name)
 
         if File.exist?(init_file)
-          @shell.say "Skipped: #{template_file_name} file already exists at #{File.expand_path(init_file)}", :yellow
+          @shell.say_status("Skipped:", "#{template_file_name} file already exists at #{File.expand_path(init_file)}", :yellow) unless @mute
         else
           FileUtils.cp(template_file_path, init_file)
 
-          @shell.say "Created: #{template_file_name}", :green
+          @shell.say_status("Created:", "#{template_file_name}", :green) unless @mute
         end
       end
+    end
+
+    def rename_env_file
+      File.rename("#{@current_directory}/env", "#{@current_directory}/.env")
+    end
+
+    def update_function_name
+      config_file = "#{@current_directory}/config.yml"
+
+      config_data = YAML.load_file config_file
+      config_data['function_name'] = @current_directory.split('/').last
+
+      File.open(config_file, 'w') { |f| YAML.dump(config_data, f) }
     end
   end
 end

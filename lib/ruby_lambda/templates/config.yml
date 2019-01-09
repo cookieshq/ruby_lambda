@@ -1,0 +1,8 @@
+region: us-east-1
+
+function_name: my_lambda_function
+handler: lambda_function.handler
+runtime: ruby2.5
+
+aws_access_key: <%= ENV['AWS_ACCESS_KEY'] %>
+aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
