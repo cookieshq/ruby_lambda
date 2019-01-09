@@ -7,15 +7,26 @@ module RubyLambda
       @shell = Thor::Base.shell.new
     end
 
-    def run
-      load "#{@current_directory}/main.rb"
+    def run(mute: false)
+      config_file = "#{@current_directory}/config.yml"
 
-      event_json_file = File.read('event.json')
+      config_data = YAML.load_file config_file
+
+      lambda_function, lambda_handler = config_data['handler'].split('.')
+
+      load "#{@current_directory}/#{lambda_function}.rb"
+
+      event_json_file = File.read("#{@current_directory}/event.json")
+
       event = JSON.parse(event_json_file)
 
       context = LambdaContext.new()
 
-      ap lambda_handler(event: event, context: context)
+      if mute
+        send(:"#{lambda_handler}", event: event, context: context)
+      else
+        ap send(:"#{lambda_handler}", event: event, context: context)
+      end
     end
   end
 end
