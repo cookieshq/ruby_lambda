@@ -6,13 +6,17 @@ require "ruby_lambda/version"
 Gem::Specification.new do |spec|
   spec.name          = "ruby_lambda"
   spec.version       = RubyLambda::VERSION
-  spec.authors       = ["denissellu"]
+  spec.authors       = ["cookieshq", "denissellu"]
   spec.email         = ["denis@cookieshq.co.uk"]
 
   spec.summary       = %q{RubyLambda is a toolset for developing and deploying serverless Ruby app in AWS Lambda.}
   spec.description   = %q{Command line tool to locally run, test and deploy your Ruby app to AWS Lambda.}
   spec.homepage      = "https://cookieshq.co.uk"
   spec.license       = "MIT"
+  spec.metadata      = {
+    'source_code_uri'   => 'https://github.com/cookieshq/ruby_lambda',
+    'documentation_uri' => 'https://github.com/cookieshq/ruby_lambda'
+  }
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
