@@ -5,7 +5,7 @@ require 'ruby_lambda'
 
 class RubyLambdaCLI < Thor
   map '-v' => :version, '--version' => :version
-  desc '-v (--versions)', 'Outputs the version of Ruby Lambda.'
+  desc '-v (--versions)', 'Outputs the version of Ruby_Lambda.'
   def version
     puts RubyLambda::VERSION
   end
@@ -15,9 +15,19 @@ class RubyLambdaCLI < Thor
     RubyLambda::Init.new(FileUtils.pwd).run
   end
 
-  desc 'execute', 'execute'
+  desc 'execute', 'Invokes the function locally'
+  long_desc <<-LONGDESC
+    This command is used to invoke / run the function locally
+
+    With -c / --config flag to pass a custom config file to use
+
+    With -H, [--handler=HANDLER]
+  LONGDESC
+
+  option :config, default: 'config.yml', type: :string, aliases: :c
+  option :handler, type: :string, aliases: :H
   def execute
-    RubyLambda::Execute.new(FileUtils.pwd).run
+    RubyLambda::Execute.new(FileUtils.pwd, options).run
   end
 end
 
