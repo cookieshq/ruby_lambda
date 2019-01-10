@@ -26,7 +26,7 @@ $ ruby-lambda init
 ```
 
 Initializes the `.gitignore`, `config.yml`, `env`, `event.json`, `lambda_function.rb`, `Gemfile`, `.ruby-version` files.
-* `event.json` is where you mock your event.
+* `event.json` is where you keep mock data that will be passed to your function when the `execute` command has ran.
 * `config.yml` contains some default configuration for your function.
 * `env` will be renamed to `.env` after the init command runs, it will contain `AWS_ACCESS_KEY` and `AWS_SECRET_ACCESS_KEY`. You will need these to be able to deploy your function.
 
@@ -36,6 +36,27 @@ Please have a read of the `config.yml` and update any of the default configurati
 ```
 $ ruby-lambda execute
 ```
+This command is used to invoke / run the function locally
+
+```
+Options:
+  -c, [--config=CONFIG] # Default: config.yml
+  -H, [--handler=HANDLER]
+```
+
+**Examples**
+* `$ ruby-lambda execute -c=config.yml`
+* `$ ruby-lambda execute -H=lambda_function.handler`
+
+The handler function is the function AWS Lambda will invoke / run in response to an event. AWS Lambda uses the event argument to pass in event data to the handler. If the `handler` flas is passed with execute, this will take precedence over the handler function defined within the `config.yml`
+
+```ruby
+def handler(event:, context:)
+  { statusCode: 200, body: JSON.generate('Hello from Ruby Lambda') }
+end
+```
+
+The `execute` command gets the values stored in the `event.json` file and passes them to your handler function.
 
 ## Development
 
