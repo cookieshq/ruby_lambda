@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'bundler/setup'
 require "#{::File.dirname(__FILE__)}/../lib/ruby_lambda"
 
 class RubyLambdaCLI < Thor
