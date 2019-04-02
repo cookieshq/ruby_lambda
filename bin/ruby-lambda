@@ -32,8 +32,15 @@ class RubyLambdaCLI < Thor
   end
 
   desc 'build', 'Builds your application into a local zip file'
+  long_desc <<-LONGDESC
+    This command will create a zipped file ready to be published on Lambda
+
+    With -n / --native-extensions flag to pass build gems with native extensions
+  LONGDESC
+
+  option :native_extensions, type: :boolean, default: false, aliases: :n
   def build
-    RubyLambda::Build.new(FileUtils.pwd).run(mute: options[:quiet])
+    RubyLambda::Build.new(FileUtils.pwd, options).run(mute: options[:quiet])
   end
 end
 

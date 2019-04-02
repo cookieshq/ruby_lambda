@@ -1,8 +1,9 @@
 module RubyLambda
   class Build
-    def initialize(current_directory)
+    def initialize(current_directory, options = {"native_extensions"=>false})
       @current_directory  = current_directory
       @shell = Thor::Base.shell.new
+      @options = options
     end
 
     def run(mute: false)
