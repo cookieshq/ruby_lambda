@@ -30,6 +30,11 @@ class RubyLambdaCLI < Thor
   def execute
     RubyLambda::Execute.new(FileUtils.pwd, options).run
   end
+
+  desc 'build', 'Builds your application into a local zip file'
+  def build
+    RubyLambda::Build.new(FileUtils.pwd).run(mute: options[:quiet])
+  end
 end
 
 RubyLambdaCLI.start(ARGV)
