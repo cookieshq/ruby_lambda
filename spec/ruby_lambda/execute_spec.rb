@@ -14,17 +14,17 @@ RSpec.describe RubyLambda::Execute do
       before :example do
         FileUtils.mkdir_p example_folder_path
 
-        RubyLambda::Init.new(example_folder_path).run(mute: true)
+        RubyLambda::Init.new(example_folder_path).run
       end
 
       it 'executes function' do
-        expect(subject.run(mute: true)).to include(statusCode: 200)
+        expect(subject.run).to include(statusCode: 200)
       end
 
       it 'it calls awesome print to display result' do
         expect(subject).to receive(:ap)
 
-        subject.run(mute: false)
+        subject.run
       end
     end
 
@@ -40,13 +40,13 @@ RSpec.describe RubyLambda::Execute do
       it 'should run when handler flag is provided instead' do
         execute_function = RubyLambda::Execute.new(example_folder_path, {'handler' => 'lambda_function.handler'})
 
-        expect(execute_function.run(mute: true)).to include(statusCode: 200)
+        expect(execute_function.run).to include(statusCode: 200)
       end
 
       it 'should fail with no handler' do
         execute_function = RubyLambda::Execute.new(example_folder_path, {})
 
-        expect{ execute_function.run(mute: true) }.to raise_error SystemExit
+        expect{ execute_function.run }.to raise_error SystemExit
       end
     end
 
@@ -62,13 +62,13 @@ RSpec.describe RubyLambda::Execute do
 
         execute_function = RubyLambda::Execute.new(example_folder_path, {'config' => 'different_config.yml'})
 
-        expect(execute_function.run(mute: true)).to include(statusCode: 200)
+        expect(execute_function.run).to include(statusCode: 200)
       end
 
       it 'should not execute without correct settings' do
         execute_function = RubyLambda::Execute.new(example_folder_path, {'config' => 'different_config.yml'})
 
-        expect{ execute_function.run(mute: true) }.to raise_error SystemExit
+        expect{ execute_function.run }.to raise_error SystemExit
       end
 
       it 'should fail if the config is not yaml' do
@@ -76,7 +76,7 @@ RSpec.describe RubyLambda::Execute do
 
         execute_function = RubyLambda::Execute.new(example_folder_path, {'config' => 'different_config.txt'})
 
-        expect{ execute_function.run(mute: true) }.to raise_error SystemExit
+        expect{ execute_function.run }.to raise_error SystemExit
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.describe RubyLambda::Execute do
       before :example do
         FileUtils.mkdir_p example_folder_path
 
-        RubyLambda::Init.new(example_folder_path).run(mute: true)
+        RubyLambda::Init.new(example_folder_path).run
       end
 
       it 'should execute with correct handler settings' do
@@ -98,13 +98,13 @@ RSpec.describe RubyLambda::Execute do
 
         execute_function = RubyLambda::Execute.new(example_folder_path, {'handler' => 'my_lambda_function.handler'})
 
-        expect(execute_function.run(mute: true)).to include(statusCode: 200)
+        expect(execute_function.run).to include(statusCode: 200)
       end
 
       it 'should fail without correct handler settings' do
         execute_function = RubyLambda::Execute.new(example_folder_path, {'handler' => 'my_lambda_function.my_handler'})
 
-        expect{ execute_function.run(mute: true) }.to raise_error SystemExit
+        expect{ execute_function.run }.to raise_error SystemExit
       end
     end
   end
@@ -113,7 +113,7 @@ end
 def init_without_config
   FileUtils.mkdir_p example_folder_path
 
-  RubyLambda::Init.new(example_folder_path).run(mute: true)
+  RubyLambda::Init.new(example_folder_path).run
 
   FileUtils.rm("#{example_folder_path}/config.yml")
 end
