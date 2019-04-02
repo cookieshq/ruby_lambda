@@ -9,7 +9,6 @@ module RubyLambda
     end
 
     def run(mute: false)
-
       @mute = mute
 
       unless File.writable?(@current_directory)

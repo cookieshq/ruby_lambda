@@ -13,7 +13,7 @@ class RubyLambdaCLI < Thor
 
   desc 'init', 'Uses the current directory as a lambda ruby project (creates `main.rb`, `.ruby-version`, and `Gemfile`).'
   def init
-    RubyLambda::Init.new(FileUtils.pwd).run
+    RubyLambda::Init.new(FileUtils.pwd).run(mute: options[:quiet])
   end
 
   desc 'execute', 'Invokes the function locally'
