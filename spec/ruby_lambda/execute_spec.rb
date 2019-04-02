@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe RubyLambda::Execute do
   subject { RubyLambda::Execute.new(example_folder_path) }
 
-  let(:example_folder_path) { "#{FileUtils.pwd}/tmp/example" }
+  let(:example_folder_path) { "#{Dir.tmpdir()}/tmp/example" }
 
   after :example do
     FileUtils.rm_rf(example_folder_path)
