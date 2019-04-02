@@ -3,6 +3,8 @@
 require "#{::File.dirname(__FILE__)}/../lib/ruby_lambda"
 
 class RubyLambdaCLI < Thor
+  class_option :quiet, type: :boolean, default: false, aliases: :q
+
   map '-v' => :version, '--version' => :version
   desc '-v (--versions)', 'Outputs the version of Ruby_Lambda.'
   def version
