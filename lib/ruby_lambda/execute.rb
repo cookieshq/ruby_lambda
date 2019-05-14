@@ -8,9 +8,7 @@ module RubyLambda
       @options = options
     end
 
-    def run(mute: false)
-      @mute = mute
-
+    def run
       begin
         if @options.has_key?('handler')
 
@@ -27,13 +25,9 @@ module RubyLambda
 
         context = LambdaContext.new()
 
-        if mute
-          send(:"#{lambda_handler}", event: event, context: context)
-        else
-          ap send(:"#{lambda_handler}", event: event, context: context), options = { :indent => -2 }
-        end
+        ap send(:"#{lambda_handler}", event: event, context: context), options = { :indent => -2 }
       rescue LoadError
-        @shell.say('Handler file or function, can not be found', :red) unless @mute
+        @shell.say('Handler file or function, can not be found', :red)
 
         exit 1
       end
@@ -49,11 +43,11 @@ module RubyLambda
       rescue Errno::ENOENT
         no_config_file_message = 'Config file missing, create a config.yml file or use the -c / --config flag to use a different config file. Alternativly you can use the -H flag to pass the name of the handler that should be executed'
 
-        @shell.say(no_config_file_message, :red) unless @mute
+        @shell.say(no_config_file_message, :red)
 
         exit 1
       rescue RubyLambda::ExecuteError
-        @shell.say('Invalid config file', :red) unless @mute
+        @shell.say('Invalid config file', :red)
 
         exit 1
       end
@@ -63,7 +57,7 @@ module RubyLambda
       if lambda_handler.nil? || lambda_handler.nil?
         no_defined_handler_message = 'No config or handler function defined, create a config.yml file or use the -c / --config flag to use a different config file. Alternativly you can use the -H flag to pass the name of the handler that should be executed'
 
-        @shell.say(no_defined_handler_message, :red) unless @mute
+        @shell.say(no_defined_handler_message, :red)
 
         exit 1
       end

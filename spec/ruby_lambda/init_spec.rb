@@ -1,7 +1,7 @@
 RSpec.describe RubyLambda::Init do
   subject { RubyLambda::Init.new(example_folder_path) }
 
-  let(:example_folder_path) { "#{FileUtils.pwd}/tmp/example" }
+  let(:example_folder_path) { "#{Dir.tmpdir()}/tmp/example" }
   let(:template_folder_path) { "#{FileUtils.pwd}/lib/ruby_lambda/templates" }
 
   describe '#run' do

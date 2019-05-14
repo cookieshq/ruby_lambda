@@ -3,18 +3,23 @@
 require "#{::File.dirname(__FILE__)}/../lib/ruby_lambda"
 
 class RubyLambdaCLI < Thor
+  class_option :quiet, type: :boolean, default: false, aliases: :q
+
   map '-v' => :version, '--version' => :version
   desc '-v (--versions)', 'Outputs the version of Ruby_Lambda.'
   def version
     puts RubyLambda::VERSION
   end
 
-  desc 'init', 'Uses the current directory as a lambda ruby project (creates `main.rb`, `.ruby-version`, and `Gemfile`).'
+  desc 'init', 'Within the current directory scaffold files needed for a baisc lambda function'
+  long_desc <<-LONGDESC
+    Uses the current directory as a lambda ruby project (creates `main.rb`, `.ruby-version`, and `Gemfile`).
+  LONGDESC
   def init
-    RubyLambda::Init.new(FileUtils.pwd).run
+    RubyLambda::Init.new(FileUtils.pwd).run(mute: options[:quiet])
   end
 
-  desc 'execute', 'Invokes the function locally'
+  desc 'execute', 'Invokes the function locally offline'
   long_desc <<-LONGDESC
     This command is used to invoke / run the function locally
 
@@ -27,6 +32,20 @@ class RubyLambdaCLI < Thor
   option :handler, type: :string, aliases: :H
   def execute
     RubyLambda::Execute.new(FileUtils.pwd, options).run
+  end
+
+  desc 'build', 'Builds your function into a local ready to deploy zip file'
+  long_desc <<-LONGDESC
+    This command will create a zipped file ready to be published on Lambda
+
+    All output zips will be in the folder builds
+
+    With -n / --native-extensions flag to pass build gems with native extensions
+  LONGDESC
+
+  option :native_extensions, type: :boolean, default: false, aliases: :n
+  def build
+    RubyLambda::Build.new(FileUtils.pwd, options).run(mute: options[:quiet])
   end
 end
 
