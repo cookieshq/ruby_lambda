@@ -15,7 +15,7 @@ RSpec.describe RubyLambda::Build do
   end
 
   describe '#run' do
-    context 'without native extentions' do
+    context 'without native extensions' do
       it 'creates a zip' do
         subject.run(mute: mute)
 
@@ -75,6 +75,10 @@ RSpec.describe RubyLambda::Build do
         expect(zip_contents).to include 'src/', 'src/main.rb'
       end
     end
+  end
+
+  context 'with native extensions' do
+    it 'checks for docker'
   end
 end
 

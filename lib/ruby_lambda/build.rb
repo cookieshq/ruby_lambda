@@ -9,7 +9,16 @@ module RubyLambda
     def run(mute: false)
       @mute = mute
 
-      setup_gems
+      if @options[:native_extensions]
+        unless which('docker')
+          @shell.say 'Can not find docker, you need to install docker if you want to build with native extensions', :red
+          return
+        end
+
+        setup_gems_with_native_extensions
+      else
+        setup_gems
+      end
 
       @shell.say('Setting up files to build', :yellow) unless @mute
       FileUtils.mkdir_p "#{@current_directory}/builds"
@@ -28,6 +37,16 @@ module RubyLambda
           @shell.say('Installing gems for deployment', :yellow) unless @mute
           `bundle install`
           `bundle install --deployment`
+        end
+      end
+    end
+
+    def setup_gems_with_native_extensions
+
+      Dir.chdir(@current_directory) do
+        Bundler.with_clean_env do
+          @shell.say('Installing gems for deployment', :yellow) unless @mute
+          `docker run -v #{@current_directory}:#{@current_directory} -w #{@current_directory} -i -t lambci/lambda:build-ruby2.5 bundle install --deployment`
         end
       end
     end
@@ -85,6 +104,17 @@ module RubyLambda
       zipfile.get_output_stream(zipfile_path) do |f|
         f.write(File.open(disk_file_path, 'rb').read)
       end
+    end
+
+    def which(cmd)
+      exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+      ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+        exts.each { |ext|
+          exe = File.join(path, "#{cmd}#{ext}")
+          return exe if File.executable?(exe) && !File.directory?(exe)
+        }
+      end
+      return nil
     end
   end
 end
