@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_lambda (0.3.2)
+    ruby_lambda (0.4.0)
       awesome_print (~> 1.8.0)
       rubyzip (~> 1.2)
       thor (~> 0.19)
