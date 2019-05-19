@@ -1,6 +1,6 @@
 module RubyLambda
   class Build
-    def initialize(current_directory, options = {"native_extensions"=>false})
+    def initialize(current_directory, options = {"native_extensions"=>false, 'file_name' => ''})
       @current_directory  = current_directory
       @shell = Thor::Base.shell.new
       @options = options
@@ -9,7 +9,7 @@ module RubyLambda
     def run(mute: false)
       @mute = mute
 
-      if @options[:native_extensions]
+      if @options['native_extensions']
         unless which('docker')
           @shell.say 'Can not find docker, you need to install docker if you want to build with native extensions', :red
           return
@@ -55,6 +55,8 @@ module RubyLambda
       new_build_number = Dir["#@current_directory/builds"].length - 1
 
       new_file_name = ''
+
+      return @options['file_name'] if @options['file_name'] && @options['file_name'] != ''
 
       begin
         new_build_number = new_build_number  + 1

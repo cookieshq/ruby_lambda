@@ -73,10 +73,22 @@ Options:
 All output zipped will in the builds folder within the project root - the build folder will be created if one does not already exists.
 
 
-## Roadmap
-Below is the roadmap to version 1
 
-- [ ] Add a way to deploy directly to AWS lambda
+#### ruby-lambda deploy
+```
+$ ruby-lambda deploy
+```
+
+## Roadmap
+Roadmap
+
+- [ ] Add an option to add APIGate way to allow functions to have an end point
+- [ ] Add the ability to deploy different ruby versions using layers
+- [ ] Add an options to choose zip uploaded to s3
+- [ ] Add option to allow deploy to use value passed through the flags
+- [ ] Add more deploy options
+- [ ] Add environment variables to be passed in deploying
+- [x] Add a way to deploy and update Lambda functions
 - [x] Add ablility to execute the function offline
 - [x] Add json file or options to be passed to execute function
 - [x] Add a way to build files in to zips ready to be deployed to lambda

@@ -47,6 +47,21 @@ class RubyLambdaCLI < Thor
   def build
     RubyLambda::Build.new(FileUtils.pwd, options).run(mute: options[:quiet])
   end
+
+  desc 'publish', 'Builds your function into a local ready to deploy zip file'
+  long_desc <<-LONGDESC
+
+    With -n / --native-extensions flag to pass build gems with native extensions
+  LONGDESC
+
+  option :native_extensions, type: :boolean, default: false, aliases: :n
+  option :publish, type: :boolean, default: true, aliases: :p
+  option :update, type: :boolean, default: false, aliases: :u
+  option :config, default: 'config.yml', type: :string, aliases: :c
+  option :zip_file, type: :string, aliases: :z
+  def deploy
+    RubyLambda::Deploy.new(FileUtils.pwd, options).run(mute: options[:quiet])
+  end
 end
 
 RubyLambdaCLI.start(ARGV)
