@@ -47,6 +47,27 @@ class RubyLambdaCLI < Thor
   def build
     RubyLambda::Build.new(FileUtils.pwd, options).run(mute: options[:quiet])
   end
+
+  desc 'publish', 'Builds your function into a local ready to deploy zip file'
+  long_desc <<-LONGDESC
+     The deploy command will either bundle install your project and package it in a zip or accept a zip file passed to it then uploads it to AWS Lambda.
+
+    With -n, --native-extensions flag to pass build gems with native extensions
+    -c, --config=CONFIG path to the config file, defalt is config.yml
+    -p, --publish if the function should be published, default is true
+    -u, --update default to true, update the function
+    -z, --zip-file=ZIP_FILE path to zip file to create or update your function
+    -q, --quiet
+  LONGDESC
+
+  option :native_extensions, type: :boolean, default: false, aliases: :n
+  option :publish, type: :boolean, default: true, aliases: :p
+  option :update, type: :boolean, default: false, aliases: :u
+  option :config, default: 'config.yml', type: :string, aliases: :c
+  option :zip_file, type: :string, aliases: :z
+  def deploy
+    RubyLambda::Deploy.new(FileUtils.pwd, options).run(mute: options[:quiet])
+  end
 end
 
 RubyLambdaCLI.start(ARGV)

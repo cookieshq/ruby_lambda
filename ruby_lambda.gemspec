@@ -31,6 +31,9 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'thor', '~> 0.19'
   spec.add_runtime_dependency 'awesome_print', '~> 1.8.0'
   spec.add_runtime_dependency 'rubyzip', '~> 1.2'
+  spec.add_runtime_dependency 'dotenv', '~> 2.7'
+  spec.add_runtime_dependency 'aws-sdk-lambda', '~> 1'
+  spec.add_runtime_dependency 'aws-sdk-iam', '~> 1'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'rake', '~> 10.0'
