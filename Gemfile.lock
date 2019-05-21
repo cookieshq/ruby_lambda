@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby_lambda (0.5.0)
+    ruby_lambda (0.5.1)
       awesome_print (~> 1.8.0)
       aws-sdk-iam (~> 1)
       aws-sdk-lambda (~> 1)
