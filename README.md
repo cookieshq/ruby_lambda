@@ -1,6 +1,6 @@
 # RubyLambda [![Build Status](https://travis-ci.org/cookieshq/ruby_lambda.svg?branch=develop)](https://travis-ci.org/cookieshq/ruby_lambda)
 
-![ruby_lambda](../master/ruby_lambda_logo.png?raw=true)
+<img src="../master/ruby_lambda_logo.png" alt="drawing" width="250"/>
 
 RubyLambda is a toolset for developing and deploying serverless Ruby apps in AWS Lambda.
 
