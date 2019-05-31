@@ -1,10 +1,11 @@
 PATH
   remote: .
   specs:
-    ruby_lambda (0.5.2)
+    ruby_lambda (0.5.4)
       awesome_print (~> 1.8.0)
       aws-sdk-iam (~> 1)
       aws-sdk-lambda (~> 1)
+      bundler (~> 1.16)
       dotenv (~> 2.7)
       rubyzip (~> 1.2)
       thor (~> 0.19)
@@ -94,7 +95,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
   guard
   guard-rspec
   rake (~> 10.0)
