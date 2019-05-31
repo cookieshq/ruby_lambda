@@ -1,3 +1,4 @@
+require 'bundler'
 require 'json'
 require 'thor'
 require 'fileutils'
