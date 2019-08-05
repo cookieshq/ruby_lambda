@@ -19,13 +19,13 @@ RSpec.describe RubyLambda::Init do
 
         Dir.foreach(template_folder_path) do |template_file_name|
           next if template_file_name == '.' or template_file_name == '..'
-          next if template_file_name == 'env' # Skips testing the env file as it is renamed
+          next if template_file_name == 'env.sample' # Skips testing the env file as it is renamed
 
           expect(File).to exist("#{example_folder_path}/#{template_file_name}")
         end
       end
 
-      it 'renames env to .env after create' do
+      it 'create the .env file' do
         subject.run(mute: true)
 
         expect(File).to exist("#{example_folder_path}/.env")
@@ -48,6 +48,7 @@ RSpec.describe RubyLambda::Init do
         Dir.foreach(template_folder_path) do |template_file_name|
           next if template_file_name == '.' or template_file_name == '..'
           next if template_file_name == 'Gemfile' # Skips testing the env file as it is renamed
+          # next if template_file_name == 'env.sample' # Skips testing the env file as it is renamed
 
           expect($stdout).to receive(:print).with("\e[1m\e[32m    Created:\e[0m  #{template_file_name}\n")
         end
