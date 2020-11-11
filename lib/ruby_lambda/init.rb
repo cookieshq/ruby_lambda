@@ -17,7 +17,7 @@ module RubyLambda
       end
 
       move_template_files
-      rename_env_file
+      create_env_file
       update_function_name
     end
 
@@ -25,7 +25,7 @@ module RubyLambda
 
     def move_template_files
       Dir.foreach(TEMPLATE_DIR) do |template_file_name|
-        next if template_file_name == '.' or template_file_name == '..'
+        next if special_handling?(filename: template_file_name)
 
         init_file = File.join(@current_directory, template_file_name)
 
@@ -41,8 +41,11 @@ module RubyLambda
       end
     end
 
-    def rename_env_file
-      File.rename("#{@current_directory}/env", "#{@current_directory}/.env")
+    def create_env_file
+      env_sample = File.join(TEMPLATE_DIR, 'env.sample')
+      env_hidden = File.join(@current_directory, '.env')
+      FileUtils.cp(env_sample, env_hidden)
+      @shell.say_status('Created:', '.env', :green)
     end
 
     def update_function_name
@@ -52,6 +55,20 @@ module RubyLambda
       config_data['function_name'] = @current_directory.split('/').last
 
       File.open(config_file, 'w') { |f| YAML.dump(config_data, f) }
+    end
+
+    def special_handling?(filename:)
+      current_directory?(filename: filename) or
+        parent_directory?(filename: filename) or
+        filename == 'env.sample'
+    end
+
+    def current_directory?(filename:)
+      filename == '.'
+    end
+
+    def parent_directory?(filename:)
+      filename == '..'
     end
   end
 end
